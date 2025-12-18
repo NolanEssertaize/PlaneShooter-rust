@@ -1,0 +1,79 @@
+# 🎯 Rust Aimbot Simulation (v0)
+
+![Rust](https://img.shields.io/badge/Language-Rust-orange)
+![Engine](https://img.shields.io/badge/Engine-Bevy%200.15-blue)
+![Status](https://img.shields.io/badge/Status-Experimental-yellow)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+A high-performance 3D ballistic simulation and predictive aimbot developed in **Rust** using the **Bevy ECS** game engine. This project demonstrates first-order trajectory prediction, entity component systems (ECS) architecture, and 3D vector mathematics.
+
+---
+
+## 📋 Overview
+
+This simulation features a "player" entity capable of firing projectiles at moving targets. It includes a custom implementation of a predictive aiming algorithm that accounts for:
+* **Target Velocity** (Leading the target).
+* **Projectile Velocity** (Travel time).
+* **Gravity Drop** (Ballistic compensation).
+
+The project is structured with a modular architecture to ensure scalability and maintainability, adhering to separation of concerns principles.
+
+## ✨ Key Features
+
+* **ECS Architecture:** Built on Bevy 0.15, utilizing Systems, Components, and Resources strictly.
+* **Predictive Ballistics:** mathematically accurate aimbot that solves intercept vectors in real-time.
+* **Hybrid Targeting System:**
+    * *Manual Mode:* Raycasting from the camera view.
+    * *Assist Mode:* Screen-space FOV check + Distance prioritization.
+* **Visual Debugging:** Real-time gizmos visualizing the lock-on vector and predicted impact point.
+* **Performance:** Optimized utilizing Bevy's parallel system execution and simple spherical collision approximation.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+* **Rust & Cargo:** (Latest Stable Channel)
+* **Vulkan Support:** A GPU compatible with Vulkan (e.g., AMD RX 7000 series, NVIDIA RTX).
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/your-username/rust-aimbot-sim.git](https://github.com/your-username/rust-aimbot-sim.git)
+    cd rust-aimbot-sim
+    ```
+
+2.  **Run the simulation**
+    *Debug mode (Fast compilation):*
+    ```bash
+    cargo run
+    ```
+    *Release mode (High performance):*
+    ```bash
+    cargo run --release
+    ```
+
+## 🎮 Controls
+
+| Input | Action | Description |
+| :--- | :--- | :--- |
+| **`SPACE`** | **Hold** | Activates the **Aimbot**. Locks onto the target closest to the cursor. |
+| **`LMB`** | **Click** | Fires a projectile. |
+| **`ESC`** | **Exit** | Closes the window (default Bevy behavior). |
+
+## 📂 Project Structure
+
+The codebase follows a modular structure to keep `main.rs` clean and readable.
+
+```text
+src/
+├── main.rs           # Entry point: App configuration and Plugin/System registration.
+├── constants.rs      # Global physics constants (Gravity, Speed, FOV).
+├── components.rs     # ECS Data structures (Velocity, Target, Bullet, etc.).
+├── resources.rs      # Global state resources (Aimbot Toggle).
+└── systems/          # Game Logic
+    ├── mod.rs        # Module exports.
+    ├── setup.rs      # Scene initialization (Camera, Lights, Spawning).
+    ├── player.rs     # Player input, Shooting logic, and Aimbot math.
+    ├── enemy.rs      # Enemy movement patterns and spawning logic.
+    └── combat.rs     # Physics integration, Ballistics, and Collision handling.
